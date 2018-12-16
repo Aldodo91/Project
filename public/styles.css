@@ -1,0 +1,96 @@
+body{
+    font-family: 'Helvetica';
+    margin: 0 auto; /* distaccamento */
+    max-width: 600px;  
+    padding: 0 20px;
+    background-color: #aaa;
+}
+
+h2{
+    font-size: 18px;
+    padding: 10px 20px; /*spazio interno*/
+    color: #000;
+}
+.mioMsc{
+    
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: right;
+}
+.container {
+    border: 2px solid #dedede;
+    background-color: #00a885;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+.title {
+  border-color: #222;
+  background-color: #00866a; 
+  text-align: center;
+  font-size:  xx-large;
+}
+
+
+}
+
+
+#chat-window{
+    height: 400px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+
+#output p{
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+}
+
+#feedback p{
+    color: #000;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
+
+#output strong{
+    color: #00866a;
+}
+
+label{
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 20px;
+}
+
+input{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: #eee;
+    border: 0;
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-family: Nunito;
+    font-size: 16px;
+}
+
+button{
+    background: #00a885;
+    color: #000;
+    font-size: 18px;
+    border: 0;
+    font-family: 'Helvetica';
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
