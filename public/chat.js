@@ -1,5 +1,6 @@
 // make connentio
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://10.113.80.117:3000');
 
 var message = document.getElementById('message');
       btn = document.getElementById('send'),
