@@ -16,11 +16,18 @@
         	</div>
          <input id="handle" type="text" placeholder="Nome"/>
          <input id="message" type="text-area" placeholder="Testo"/>
-         <button id="send">Invia</button>
+         <button id="send" onclic="blocca()">Invia</button>
         </div>
 
         
         
-        <script src="/chat.js"></script>
+        <script src="/chat.js">
+            function blocca(){
+                document.getElementById("handle").readOnly=true;
+            }
+        </script>
+        <script> 
+
+        </script>
     </body>
 </html>

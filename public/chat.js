@@ -1,30 +1,44 @@
-// make connentio
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://10.113.80.117:3000');
+// make connention
+var socket = io.connect('http://ubuntu-91.ddns.net:3000');
 
 var message = document.getElementById('message');
       btn = document.getElementById('send'),
       feedback = document.getElementById('feedback'),
       output = document.getElementById('output');
 const handle = document.getElementById('handle');
+
 // Emit events
 
 
-btn.addEventListener('click', function(){
+message.addEventListener("keyup", event => {
+if (event.keyCode==13){
+  event.preventDefault();
+  btn.click();
+}
+})
 
-  socket.emit('chat', {
-  	socket:socket.id,
-  	message:message.value,
-  	handle:handle.value
-  });
+
+btn.addEventListener('click', () => {
+
+	if (message.value != "")
+		socket.emit('chat', {
+			socket:socket.id,
+			message:message.value,
+			handle:handle.value
+		});
+
   message.value = "";
+  handle.readOnly=true; 
+  message.focus();
 });
-message.addEventListener('keypress',function(){
+
+
+message.addEventListener('keypress', () => {
 	socket.emit('typing',handle.value);
 	window.scrollTo(0,document.body.scrollHeight);
 })
 // Listen for events
-socket.on('chat', function(data){
+socket.on('chat', data => {
 	feedback.innerHTML="";
 	if(data.socket == socket.id){
 		output.innerHTML += '<p class="mioMsc"> <strong>' +  data.handle + ': </strong>' + data.message + '</p>';
@@ -33,6 +47,6 @@ socket.on('chat', function(data){
 	window.scrollBy(0, window.innerHeight);
 });
 
-socket.on('typing', function(data){
+socket.on('typing', data => {
 	feedback.innerHTML ='<p><em>' + data + ' sta scrivendo...</em> </p>';
 })
