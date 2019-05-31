@@ -1,5 +1,5 @@
 // make connention
-var socket = io.connect('http://ubuntu-91.ddns.net:3000');
+var socket = io.connect('http://<your ip address>:3000');
 
 var message = document.getElementById('message');
       btn = document.getElementById('send'),
