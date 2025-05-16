@@ -1,52 +1,63 @@
 // make connention
-var socket = io.connect('http://<your ip address>:3000');
+const socket = io.connect("http://192.168.1.52:3000");
 
-var message = document.getElementById('message');
-      btn = document.getElementById('send'),
-      feedback = document.getElementById('feedback'),
-      output = document.getElementById('output');
-const handle = document.getElementById('handle');
+const message = document.getElementById("message");
+const btn = document.getElementById("send");
+const feedback = document.getElementById("feedback");
+const output = document.getElementById("output");
+const handle = document.getElementById("handle");
+
+function criptaTesto(testo) {
+  return btoa(unescape(encodeURIComponent(testo)));
+}
+
+function decriptaTesto(testoCriptato) {
+  return decodeURIComponent(escape(atob(testoCriptato)));
+}
 
 // Emit events
 
-
-message.addEventListener("keyup", event => {
-if (event.keyCode==13){
-  event.preventDefault();
-  btn.click();
-}
-})
-
-
-btn.addEventListener('click', () => {
-
-	if (message.value != "")
-		socket.emit('chat', {
-			socket:socket.id,
-			message:message.value,
-			handle:handle.value
-		});
-
-  message.value = "";
-  handle.readOnly=true; 
-  message.focus();
+message.addEventListener("keyup", (event) => {
+  if (event.keyCode == 13) {
+    event.preventDefault();
+    btn.click();
+  }
 });
 
+btn.addEventListener("click", () => {
+  if (message.value != "" && handle.value != "") {
+    handle.disabled = true;
+    socket.emit("chat", {
+      socket: socket.id,
+      message: criptaTesto(message.value),
+      handle: handle.value,
+    });
+    message.value = "";
+    handle.readOnly = true;
+    message.focus();
+  }
+});
 
-message.addEventListener('keypress', () => {
-	socket.emit('typing',handle.value);
-	window.scrollTo(0,document.body.scrollHeight);
-})
+message.addEventListener("keypress", () => {
+  socket.emit("typing", handle.value);
+  window.scrollTo(0, document.body.scrollHeight);
+});
 // Listen for events
-socket.on('chat', data => {
-	feedback.innerHTML="";
-	if(data.socket == socket.id){
-		output.innerHTML += '<p class="mioMsc"> <strong>' +  data.handle + ': </strong>' + data.message + '</p>';
-	}
-	else output.innerHTML += '<p class="chat-window"> <strong>' + data.handle + ': </strong>' + data.message + '</p>';
-	window.scrollBy(0, window.innerHeight);
+socket.on("chat", (data) => {
+  feedback.innerHTML = "";
+  // decript data.message
+  if (data.socket == socket.id) {
+    output.innerHTML += `<p class="mioMsc"> <strong> ${
+      data.handle
+    }: </strong>${decriptaTesto(data.message)}</p>`;
+  } else {
+    output.innerHTML += `<p class="chat-window"> <strong>${
+      data.handle
+    }: </strong> ${decriptaTesto(data.message)}</p>`;
+  }
+  window.scrollBy(0, window.innerHeight);
 });
 
-socket.on('typing', data => {
-	feedback.innerHTML ='<p><em>' + data + ' sta scrivendo...</em> </p>';
-})
+socket.on("typing", (data) => {
+  feedback.innerHTML = `<p><em> ${data} sta scrivendo...</em> </p>`;
+});
