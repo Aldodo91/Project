@@ -19,13 +19,14 @@ function decriptaTesto(testoCriptato) {
 
 message.addEventListener("keyup", (event) => {
   if (event.keyCode == 13) {
-    event.preventDefault();
+    // event.preventDefault();
     btn.click();
   }
 });
 
 btn.addEventListener("click", () => {
   if (message.value != "" && handle.value != "") {
+    localStorage.setItem("nome", handle.value);
     handle.disabled = true;
     socket.emit("chat", {
       socket: socket.id,
@@ -38,7 +39,7 @@ btn.addEventListener("click", () => {
   }
 });
 
-message.addEventListener("keypress", () => {
+message.addEventListener("input", () => {
   socket.emit("typing", handle.value);
   window.scrollTo(0, document.body.scrollHeight);
 });
@@ -55,9 +56,15 @@ socket.on("chat", (data) => {
       data.handle
     }: </strong> ${decriptaTesto(data.message)}</p>`;
   }
-  window.scrollBy(0, window.innerHeight);
+  feedback.scrollIntoView({ behavior: "smooth" });
 });
 
 socket.on("typing", (data) => {
   feedback.innerHTML = `<p><em> ${data} sta scrivendo...</em> </p>`;
 });
+
+const nome = localStorage.getItem("nome");
+if (nome) {
+  handle.value = nome;
+  message.focus();
+}
